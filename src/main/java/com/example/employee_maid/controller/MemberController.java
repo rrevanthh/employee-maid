@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.employee_maid.model.MemberDetails;
+import com.example.employee_maid.model.UserDetails;
 import com.example.employee_maid.repository.MemberRepository;
+import com.example.employee_maid.repository.UserDetailsRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -23,6 +26,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberRepository memberRepository;
+	
+	@Autowired
+	private UserDetailsRepository userDetailsRepository;
 	
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
@@ -37,6 +43,11 @@ public class MemberController {
 	@PostMapping("/membercreate")
 	public ResponseEntity<MemberDetails> createMemberDetails(@RequestBody MemberDetails member){
 		return ResponseEntity.ok().body(this.memberRepository.save(member));		
+	}
+	@PostMapping("/usercreate")
+	public ResponseEntity<UserDetails> createUserDetails(@RequestBody UserDetails userdetail){
+		return ResponseEntity.ok().body(this.userDetailsRepository.save(userdetail));
+			
 	}
 	
 	@GetMapping("/bymemberid/{id}")
