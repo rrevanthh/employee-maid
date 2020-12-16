@@ -14,12 +14,15 @@ public class UserDetails {
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long userId;
-	
+
 	@Column(name = "role")
 	private String role;
 	
 	@Column(name = "maid_type")
 	private String maidType;
+	
+	@Column(name = "user_name")
+	private String userName;
 	
 	@Column(name = "first_name")
 	private String firstName;
@@ -33,6 +36,32 @@ public class UserDetails {
 	@Column(name = "address")
 	private String address;
 	
+	@Column(name = "mobile")
+	private long mobile;
+	
+	@Column(name = "password")
+	private String password;
+	
+	public UserDetails() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserDetails(long userId, String role, String maidType, String userName, String firstName, String lastName,
+			String email, String address, long mobile, String password) {
+		super();
+		this.userId = userId;
+		this.role = role;
+		this.maidType = maidType;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.address = address;
+		this.mobile = mobile;
+		this.password = password;
+	}
+
 	public long getUserId() {
 		return userId;
 	}
@@ -73,6 +102,16 @@ public class UserDetails {
 		this.lastName = lastName;
 	}
 
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
 	public String getEmail() {
 		return email;
 	}
@@ -105,11 +144,7 @@ public class UserDetails {
 		this.password = password;
 	}
 
-	@Column(name = "mobile")
-	private long mobile;
-	
-	@Column(name = "password")
-	private String password;
+
 
 	
 

@@ -1,7 +1,9 @@
 package com.example.employee_maid.controller;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +50,28 @@ public class MemberController {
 	public ResponseEntity<UserDetails> createUserDetails(@RequestBody UserDetails userdetail){
 		return ResponseEntity.ok().body(this.userDetailsRepository.save(userdetail));
 			
+	}
+	
+	@PostMapping("/userverify")
+	public ResponseEntity<UserDetails> userverify(@RequestBody UserDetails currentUserDetail){
+		UserDetails userdetail2 = new UserDetails();
+		List<UserDetails> UserDetails = this.userDetailsRepository.findAll();
+		String userName =currentUserDetail.getUserName();
+		List<UserDetails> UserDetails1=this.userDetailsRepository.findByuserName(userName);
+		
+		
+		String password =currentUserDetail.getPassword();
+		
+		List<UserDetails> UserDetailsOptional =UserDetails.stream()
+				.filter(action->action.getUserName().equalsIgnoreCase(userName)
+					&&action.getPassword().equalsIgnoreCase(password)).collect(Collectors.toList());
+		
+		  if(!UserDetailsOptional.isEmpty()) {
+			  return ResponseEntity.ok().body(UserDetailsOptional.get(0));
+		  }else
+		  {
+			  return ResponseEntity.ok().body(userdetail2);
+		  }			
 	}
 	
 	@GetMapping("/bymemberid/{id}")
